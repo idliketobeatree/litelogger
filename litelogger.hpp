@@ -26,6 +26,9 @@
 #include <cstdarg>
 #include <cstdio>
 #include <ctime>
+#include <cstdlib>
+
+#include <functional>
 
 #define DOUBLE_SEPARATOR        "================================================================================"
 #define HASHTAG_SEPARATOR       "################################################################################"
@@ -47,10 +50,10 @@ namespace litelogger {
 			name(name), format(format), level(level), stream(stream) {}
 	};
 
-	const inline Logger DEBUG("Debug", "[\033[1;95m%s\033[0m %s]: ", -1, stdout);
-	const inline Logger INFO("Info", "[\033[1;96m%s\033[0m %s]: ", 0, stdout);
-	const inline Logger WARN("Warn", "[\033[1;93m%s\033[0m %s]: ", 1, stdout);
-	const inline Logger ERROR("Error", "[\033[1;91m%s\033[0m %s]: ", 127, stderr);
+	inline Logger DEBUG("Debug", "[\033[1;95m%s\033[0m %s]: ", -1, stdout);
+	inline Logger INFO("Info", "[\033[1;96m%s\033[0m %s]: ", 0, stdout);
+	inline Logger WARN("Warn", "[\033[1;93m%s\033[0m %s]: ", 1, stdout);
+	inline Logger ERROR("Error", "[\033[1;91m%s\033[0m %s]: ", 127, stderr);
 
 	/// change the log level. loggers whose levels are below this will not print
 	inline void changeLevel(int8_t to) {
@@ -108,6 +111,17 @@ namespace litelogger {
 		va_start(args, format);
 		logln(logger.stream, logger, format, args);
 		va_end(args);
+	}
+
+	/// Prints to the error logger and exits the program 
+	inline void error(const char *format, ...) {
+		va_list args;
+
+		va_start(args, format);
+		logln(litelogger::ERROR, format, args);
+		va_end(args);
+
+		exit(EXIT_FAILURE);
 	}
 }
 
