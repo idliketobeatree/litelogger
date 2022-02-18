@@ -15,7 +15,7 @@ There are 4 default loggers in LiteLogger, but new ones can be created and used 
 litelogger::logln(litelogger::DEBUG, "debug :D");
 litelogger::logln(litelogger::INFO, "info :)");
 litelogger::logln(litelogger::WARN, "warning :/");
-litelogger::logln(litelogger::DEBUG, "error D:");
+litelogger::logln(litelogger::ERROR, "error D:");
 
 const litelogger::Logger test("Test", 0, stdout);
 

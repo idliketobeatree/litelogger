@@ -68,12 +68,9 @@ namespace litelogger {
 	inline void flush(const Logger &logger) {
 		flush(logger.stream);
 	}
-	
-	/// print to `stream` with no newline
-	inline void log(FILE *stream, const Logger &logger, const char *format, ...) {
-		if(logger.level >= logLevel) {
-			va_list args;
 
+	inline void log(FILE *stream, const Logger &logger, const char *format, va_list args) {
+		if(logger.level >= logLevel) {
 			char timeString[9];
 			{
 				time_t t;
@@ -81,10 +78,23 @@ namespace litelogger {
 				strftime(timeString, 9, "%H:%M:%S", localtime(&t));
 			}
 			fprintf(stream, logger.format, logger.name, timeString); // print logger stuff
-			va_start(args, format);
 			vfprintf(stream, format, args); // print actual message
-			va_end(args);
 		}
+	}
+	inline void logln(FILE *stream, const Logger &logger, const char *format, va_list args) {
+		if(logger.level >= logLevel) {
+			log(stream, logger, format, args);
+			putc('\n', stream);
+		}
+	}
+	
+	/// print to `stream` with no newline
+	inline void log(FILE *stream, const Logger &logger, const char *format, ...) {
+		va_list args;
+
+		va_start(args, format);
+		log(stream, logger, format, args);
+		va_end(args);
 	}
 	/// print to default stream with no newline
 	inline void log(const Logger &logger, const char *format, ...) {
@@ -100,9 +110,8 @@ namespace litelogger {
 		va_list args;
 
 		va_start(args, format);
-		log(stream, logger, format, args);
+		logln(stream, logger, format, args);
 		va_end(args);
-		putc('\n', stream);
 	}
 	/// print to default stream with a newline added automatically
 	inline void logln(const Logger &logger, const char *format, ...) {
@@ -114,7 +123,7 @@ namespace litelogger {
 	}
 
 	/// Prints to the error logger and exits the program 
-	inline void error(const char *format, ...) {
+	inline void exitError(const char *format, ...) {
 		va_list args;
 
 		va_start(args, format);
