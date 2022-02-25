@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Ashley <stickacupcakeinmyeye@riseup.net>
+ * Copyright (c) 2022 Ashley <stickacupcakeinmyeye@protonmail.com>
  * https://github.com/stickacupcakeinmyeye/litelogger
  *
  * This software is provided 'as-is', without any express or implied
