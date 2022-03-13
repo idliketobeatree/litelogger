@@ -137,7 +137,7 @@ namespace litelogger {
 		va_list args;
 
 		va_start(args, format);
-		logln(litelogger::ERROR, format, args);
+		logln(litelogger::ERROR.stream, litelogger::ERROR, format, args);
 		va_end(args);
 
 		exit(EXIT_FAILURE);
