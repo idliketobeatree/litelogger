@@ -69,6 +69,16 @@ namespace litelogger {
 		flush(logger.stream);
 	}
 
+	/// put \n to stream
+    inline void newline(FILE *stream = stdout) {
+        putc('\n', stream);
+    }
+    /// put \n to default stream
+    inline void newline(const Logger &logger) {
+        if(logger.level >= logLevel)
+            newline(logger.stream);
+    }
+
 	inline void log(FILE *stream, const Logger &logger, const char *format, va_list args) {
 		if(logger.level >= logLevel) {
 			char timeString[9];
@@ -84,7 +94,7 @@ namespace litelogger {
 	inline void logln(FILE *stream, const Logger &logger, const char *format, va_list args) {
 		if(logger.level >= logLevel) {
 			log(stream, logger, format, args);
-			putc('\n', stream);
+			newline(stream);
 		}
 	}
 	
