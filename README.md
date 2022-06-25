@@ -1,7 +1,5 @@
 # LiteLogger
 
-<hr>
-
 A lightweight header-only logging library written in C++, ~100 LOC
 
 Features 4 default loggers with log levels to control which you see at any time. New loggers can be created dynamically, for example per-class or per-thread if that's your thing.
